@@ -27,6 +27,7 @@ class Application extends Component {
 
   handleRemove = async id => {
     const allPosts = this.state.posts;
+    await firestore.doc(`posts/${id}`).delete();
     const posts = allPosts.filter(post => post.id !== id);
     this.setState({ posts });
   };
@@ -37,7 +38,11 @@ class Application extends Component {
     return (
       <main className="Application">
         <h1>Think Piece</h1>
-        <Posts posts={posts} onCreate={this.handleCreate} />
+        <Posts
+          posts={posts}
+          onCreate={this.handleCreate}
+          onRemove={this.handleRemove}
+        />
       </main>
     );
   }
